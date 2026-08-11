@@ -54,7 +54,7 @@ plugin_market = {
 for repo in repos:
     repo_count += 1
     print(f"检查仓库: {repo.name}")
-    if repo.name.startswith("ro_"):
+    if repo.name.startswith("ro_") or repo.name.startswith("ro-"):
         ro_repo_count += 1
         print(f"  ✓ 找到插件仓库: {repo.name}")
         
