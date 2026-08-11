@@ -1,0 +1,43 @@
+name: 自动更新插件市场索引
+
+on:
+  schedule:
+    # 每天 UTC 时间 17:00 运行，对应上海时间 01:00
+    - cron: "0 17 * * *"
+  # 保留手动触发功能，方便调试
+  workflow_dispatch:
+
+jobs:
+  generate-market:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 允许推送更新后的文件到仓库
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: 安装依赖
+        run: |
+          pip install requests pyyaml
+          
+      - name: 执行市场索引生成脚本
+        id: generate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python generate_market.py
+          
+      - name: 提交并推送更新
+        if: steps.generate.outputs.changes == 'true'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plugin_market.json
+          git commit -m "自动更新插件市场索引 [skip ci]"
+          git push
