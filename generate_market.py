@@ -3,30 +3,43 @@ import json
 import yaml
 import requests
 from datetime import datetime
-from github import Github, GithubException
+from github import Github, GithubException, Auth
 
 # 从环境变量获取 GitHub Token
 token = os.getenv('GITHUB_TOKEN')
 if not token:
     raise ValueError("GITHUB_TOKEN environment variable is not set")
 
-# 初始化 GitHub 客户端
-g = Github(token)
+# 使用推荐的 Auth 方式（消除弃用警告）
+auth = Auth.Token(token)
+g = Github(auth=auth)
 
-# 获取当前仓库的信息
-# 注意：这里假设脚本运行在拥有所有目标仓库的组织或个人账户下
-# 你需要明确指定要扫描的 GitHub 组织或用户名
-repo_owner = "RO-Series"  # 请替换为你的组织或用户名
+# 指定要扫描的组织或用户名
+repo_owner = "RO-Series"
 
 # 尝试获取用户或组织
 try:
+    # 先尝试作为用户获取
     user = g.get_user(repo_owner)
-except GithubException:
-    # 如果用户不存在，尝试作为组织获取
-    user = g.get_organization(repo_owner)
+    print(f"作为用户获取成功: {user.name}")
+except GithubException as e:
+    print(f"用户获取失败，尝试作为组织获取...")
+    try:
+        # 如果用户获取失败，尝试作为组织获取
+        user = g.get_organization(repo_owner)
+        print(f"作为组织获取成功: {user.name}")
+    except GithubException as e2:
+        print(f"错误: 无法找到用户或组织 '{repo_owner}'")
+        print(f"用户错误: {e}, 组织错误: {e2}")
+        exit(1)
 
 # 获取所有仓库
 repos = user.get_repos()
+
+# 统计和调试信息
+repo_count = 0
+ro_repo_count = 0
+print(f"开始扫描 '{repo_owner}' 下的仓库...")
 
 # 插件市场数据结构
 plugin_market = {
@@ -39,8 +52,11 @@ plugin_market = {
 
 # 扫描以 'ro_' 开头的插件仓库
 for repo in repos:
+    repo_count += 1
+    print(f"检查仓库: {repo.name}")
     if repo.name.startswith("ro_"):
-        print(f"正在处理插件仓库: {repo.name}")
+        ro_repo_count += 1
+        print(f"  ✓ 找到插件仓库: {repo.name}")
         
         try:
             # 获取仓库根目录下的 metadata.yaml 文件内容
@@ -67,34 +83,13 @@ for repo in repos:
                 "updated_at": repo.updated_at.isoformat()
             }
             
-            print(f"  - 成功添加插件: {plugin_id}")
+            print(f"  - 成功添加插件: {plugin_id} (版本 {version})")
             
         except GithubException as e:
             print(f"  - 警告: 无法读取 metadata.yaml，跳过。错误: {e}")
         except yaml.YAMLError as e:
             print(f"  - 警告: metadata.yaml 格式错误，跳过。错误: {e}")
+    else:
+        print(f"  - 跳过: 不是插件仓库")
 
-# 读取现有 market 文件，判断是否有变化
-try:
-    with open('plugin_market.json', 'r', encoding='utf-8') as f:
-        old_content = json.load(f)
-except (FileNotFoundError, json.JSONDecodeError):
-    old_content = {}
-
-# 比较新旧数据
-changes_made = (old_content != plugin_market)
-
-# 写入新的 plugin_market.json 文件
-with open('plugin_market.json', 'w', encoding='utf-8') as f:
-    json.dump(plugin_market, f, indent=2, ensure_ascii=False)
-
-# 设置一个输出变量，用于决定是否提交更改
-# 注意：GITHUB_OUTPUT 是 GitHub Actions 特有的环境变量
-with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-    f.write(f"changes={str(changes_made).lower()}")
-
-print(f"市场索引已更新，共包含 {len(plugin_market)-1} 个插件。")
-if changes_made:
-    print("检测到内容变化，将在下一步提交更新。")
-else:
-    print("未检测到内容变化。")
+print(f"扫描完成: 共 {repo_count} 个仓库，其中 {ro_repo_count} 个以 'ro_' 开头")
