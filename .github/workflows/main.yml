@@ -24,7 +24,7 @@ jobs:
           
       - name: 安装依赖
         run: |
-          pip install requests pyyaml
+          pip install requests pyyaml PyGithub
           
       - name: 执行市场索引生成脚本
         id: generate
