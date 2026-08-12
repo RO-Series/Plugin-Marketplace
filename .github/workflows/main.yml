@@ -10,13 +10,15 @@ on:
 jobs:
   generate-market:
     runs-on: ubuntu-latest
+    
+    # 关键：赋予工作流写入仓库内容的权限
     permissions:
-      contents: write  # 允许推送更新后的文件到仓库
+      contents: write
     
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
-        
+
       - name: 设置 Python
         uses: actions/setup-python@v5
         with:
@@ -34,10 +36,11 @@ jobs:
           python generate_market.py
           
       - name: 提交并推送更新
-        if: steps.generate.outputs.changes == 'true'
+        # 移除 if 条件，让此步骤始终尝试执行，以便在日志中看到明确结果
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add plugin_market.json
-          git commit -m "自动更新插件市场索引 [skip ci]"
+          # 如果没有变更，git commit 会失败，但通过 || 让脚本继续，并打印提示
+          git commit -m "自动更新插件市场索引 [skip ci]" || echo "没有检测到需要提交的变更"
           git push
