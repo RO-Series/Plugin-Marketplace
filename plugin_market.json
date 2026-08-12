@@ -2,14 +2,14 @@
   "$meta": {
     "schema_version": 1,
     "name": "RO系列_插件市场",
-    "updated_at": "2026-08-12T00:14:13.411724Z"
+    "updated_at": "2026-08-12T03:11:57.830962Z"
   },
   "ROTeam/ro_identity_card": {
     "author": "ROTeam",
     "name": "ro_identity_card",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "repo": "https://github.com/RO-Series/ro-identity-card",
     "desc": "生成磨砂/液态玻璃效果的身份卡片图片",
-    "updated_at": "2026-08-12T00:12:30+00:00"
+    "updated_at": "2026-08-12T03:09:24+00:00"
   }
 }
