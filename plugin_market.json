@@ -2,6 +2,14 @@
   "$meta": {
     "schema_version": 1,
     "name": "RO系列_插件市场",
-    "updated_at": "2026-08-11T23:54:41.366872Z"
+    "updated_at": "2026-08-12T00:08:39.090858Z"
+  },
+  "ROTeam/ro_identity_card": {
+    "author": "ROTeam",
+    "name": "ro_identity_card",
+    "version": "1.2.0",
+    "repo": "https://github.com/RO-Series/ro-identity-card",
+    "desc": "",
+    "updated_at": "2026-08-11T23:39:32+00:00"
   }
 }
