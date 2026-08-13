@@ -2,7 +2,7 @@
   "$meta": {
     "schema_version": 1,
     "name": "RO系列_插件市场",
-    "updated_at": "2026-08-13T10:22:27.514984Z"
+    "updated_at": "2026-08-13T17:55:26.946855Z"
   },
   "ROTeam/ro_identity_card": {
     "author": "ROTeam",
@@ -18,6 +18,6 @@
     "version": "1.0.3",
     "repo": "https://github.com/RO-Series/ro_play_plugin",
     "desc": "综合性 QQ 机器人插件。包含授权系统、群管系统、入群审核、娱乐经济（签到/钓鱼/银行/轮盘/打劫）、群老婆、漂流瓶、发卡、音乐点歌、问答、续火、黑名单/违禁词、发言统计、伪造聊天、马甲、入群私聊、视频解析、今日运势及多种工具。",
-    "updated_at": "2026-08-13T10:22:01+00:00"
+    "updated_at": "2026-08-13T10:50:43+00:00"
   }
 }
