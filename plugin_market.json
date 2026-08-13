@@ -2,7 +2,7 @@
   "$meta": {
     "schema_version": 1,
     "name": "RO系列_插件市场",
-    "updated_at": "2026-08-12T17:55:40.984652Z"
+    "updated_at": "2026-08-13T10:10:38.371949Z"
   },
   "ROTeam/ro_identity_card": {
     "author": "ROTeam",
@@ -11,5 +11,13 @@
     "repo": "https://github.com/RO-Series/ro-identity-card",
     "desc": "生成磨砂/液态玻璃效果的身份卡片图片",
     "updated_at": "2026-08-12T03:09:24+00:00"
+  },
+  "ROTeam/ro_play_plugin": {
+    "author": "ROTeam",
+    "name": "ro_play_plugin",
+    "version": "1.0.0",
+    "repo": "https://github.com/RO-Series/ro_play_plugin",
+    "desc": "综合性 QQ 机器人插件。包含授权系统、群管系统、入群审核、娱乐经济（签到/钓鱼/银行/轮盘/打劫）、群老婆、漂流瓶、发卡、音乐点歌、问答、续火、黑名单/违禁词、发言统计、伪造聊天、马甲、入群私聊、视频解析、今日运势及多种工具。",
+    "updated_at": "2026-08-13T10:10:26+00:00"
   }
 }
