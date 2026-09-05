@@ -2,15 +2,15 @@
   "$meta": {
     "schema_version": 1,
     "name": "RO系列_插件市场",
-    "updated_at": "2026-09-05T13:28:57.238394Z"
+    "updated_at": "2026-09-05T14:15:50.590593Z"
   },
-  "BaiXuan/astrbot_plugin_github_webhook": {
-    "author": "BaiXuan",
-    "name": "astrbot_plugin_github_webhook",
+  "RO-Series/ro_github_webhook": {
+    "author": "RO-Series",
+    "name": "ro_github_webhook",
     "version": "1.0.0",
     "repo": "https://github.com/RO-Series/ro-github-webhook",
     "desc": "## GitHub Webhook 推送插件\n\n接收 GitHub Webhook 推送，支持全部 75 种事件类型，将事件通知以 QQ 官方机器人支持的 Markdown 格式发送到指定会话。\n\n### 功能特性\n- 支持 GitHub 全部 75 种 Webhook 事件\n- 可配置启用的事件类型\n- HMAC-SHA256 签名验证\n- QQ 官方机器人 Markdown 消息推送\n- 可自定义 Webhook 监听端口\n\n### 使用说明\n1. 配置 Webhook 监听端口（默认 8080）\n2. 设置 Webhook Secret（用于签名验证）\n3. 配置目标 QQ 会话 ID 与会话类型\n4. 选择需要订阅的事件类型\n5. 在 GitHub 仓库/组织设置中添加 Webhook，URL 为 `http://你的服务器IP:端口/`\n",
-    "updated_at": "2026-09-05T13:28:17+00:00"
+    "updated_at": "2026-09-05T13:55:08+00:00"
   },
   "ROTeam/ro_identity_card": {
     "author": "ROTeam",
